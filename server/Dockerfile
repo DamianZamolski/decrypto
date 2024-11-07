@@ -1,4 +1,4 @@
-from node:lts-alpine as base
+from node:lts as base
 
 run npm install -g pnpm
 workdir /app
@@ -14,6 +14,7 @@ run pnpm build
 from base
 copy --from=prod-dependencies /app/node_modules /app/node_modules
 copy --from=build /app/dist /app/dist
-env PORT 80
+env PORT=80
 expose $PORT
+healthcheck cmd curl --fail http://localhost:$PORT/health || exit 1
 cmd [ "pnpm", "start" ]

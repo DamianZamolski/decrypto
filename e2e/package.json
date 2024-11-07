@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "install": "playwright install --with-deps",
+    "install-playwright": "playwright install --with-deps",
     "test": "playwright test"
   },
   "devDependencies": {

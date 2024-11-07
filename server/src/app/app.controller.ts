@@ -1,5 +1,5 @@
 import z from 'zod';
-import { Body, Controller, Logger, Post } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post } from '@nestjs/common';
 
 export const reposSchema = z.array(z.object({ name: z.string() }));
 
@@ -9,8 +9,13 @@ export type Repos = z.infer<typeof reposSchema>;
 export class AppController {
   constructor(private readonly logger: Logger) {}
 
+  @Get('/health')
+  getHealth() {
+    return 'healthy';
+  }
+
   @Post('/test')
-  test(@Body() body: unknown) {
+  test(@Body() _body: unknown) {
     this.logger.log({
       msg: 'test',
       source: getTopStackItem(),
