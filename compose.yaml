@@ -1,0 +1,31 @@
+services:
+  server:
+    build:
+      context: ./server
+    container_name: server
+    ports:
+      - "${SERVER_PORT}:7777"
+    environment:
+      - LOKI_URL=http://loki:${LOKI_PORT}
+    restart: unless-stopped
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "${LOKI_PORT}:3100"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "${GRAFANA_PORT}:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+
+volumes:
+  grafana-data:
