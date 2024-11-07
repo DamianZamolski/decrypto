@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  repository: damianzamolski/party-games
+  repository: "damianzamolski/party-games"
 
 jobs:
   build-web:
