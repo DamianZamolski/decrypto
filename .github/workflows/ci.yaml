@@ -1,4 +1,4 @@
-name: c1
+name: ci
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  repository: "damianzamolski/party-games"
+  repository: damianzamolski/party-games
 
 jobs:
   build-web:
@@ -26,10 +26,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: build web image
-        run: docker build -t ghcr.io/${{ repository }}/web:latest -f ./web/Dockerfile .
+        run: docker build -t ghcr.io/${{ env.repository }}/web:latest -f ./web/Dockerfile .
 
       - name: push web image
-        run: docker push ghcr.io/${{ repository }}/web:latest
+        run: docker push ghcr.io/${{ env.repository }}/web:latest
 
   build-server:
     runs-on: ubuntu-latest
@@ -48,10 +48,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: build server image
-        run: docker build -t ghcr.io/${{ repository }}/server:latest -f ./server/Dockerfile .
+        run: docker build -t ghcr.io/${{ env.repository }}/server:latest -f ./server/Dockerfile .
 
       - name: push server image
-        run: docker push ghcr.io/${{ repository }}/server:latest
+        run: docker push ghcr.io/${{ env.repository }}/server:latest
 
   e2e:
     runs-on: ubuntu-latest
@@ -68,10 +68,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: pull web image
-        run: docker pull ghcr.io/${{ repository }}/web:latest
+        run: docker pull ghcr.io/${{ env.repository }}/web:latest
 
       - name: pull server image
-        run: docker pull ghcr.io/${{ repository }}/server:latest
+        run: docker pull ghcr.io/${{ env.repository }}/server:latest
 
       - name: start services
         run: docker-compose up -d
