@@ -5,6 +5,7 @@ import { pinoLoggerModule } from './pinoLoggerModule';
 import { LogRequestMiddleware } from './LogRequestMiddleware';
 import { Gateway } from './Gateway';
 import { AppController } from './app/app.controller';
+import { AuthUserMiddleware } from './AuthUserMiddleware';
 
 @Module({
   imports: [
@@ -17,6 +18,10 @@ import { AppController } from './app/app.controller';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LogRequestMiddleware).forRoutes(AppController);
+    consumer
+      .apply(LogRequestMiddleware)
+      .forRoutes(AppController)
+      .apply(AuthUserMiddleware)
+      .forRoutes(AppController);
   }
 }

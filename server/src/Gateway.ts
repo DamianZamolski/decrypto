@@ -20,11 +20,11 @@ export class Gateway
     const cookieHeader = request.headers.cookie;
 
     if (cookieHeader) {
-      const { id } = cookie.parse(cookieHeader);
+      const { sessionId } = cookie.parse(cookieHeader);
 
-      if (id) {
-        this.logger.log(`client '${id}' connected`);
-        this.clients.set(client, id);
+      if (sessionId) {
+        this.logger.log(`client '${sessionId}' connected`);
+        this.clients.set(client, sessionId);
 
         client.on('message', (data: string | Buffer) => {
           const message = Buffer.isBuffer(data) ? data.toString('utf-8') : data;
@@ -36,7 +36,7 @@ export class Gateway
     }
 
     this.logger.warn(`client without id connected`);
-    client.close(1000, 'id cookie missing');
+    //client.close(1000, 'id cookie missing');
   }
 
   handleDisconnect(client: WebSocket) {
