@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: build web image
-        run: docker build -t ghcr.io/${{ env.repository }}/web:latest -f ./web/Dockerfile .
+        run: docker build -t ghcr.io/${{ env.repository }}/web:latest web
 
       - name: push web image
         run: docker push ghcr.io/${{ env.repository }}/web:latest
@@ -48,7 +48,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: build server image
-        run: docker build -t ghcr.io/${{ env.repository }}/server:latest -f ./server/Dockerfile .
+        run: docker build -t ghcr.io/${{ env.repository }}/server:latest server
 
       - name: push server image
         run: docker push ghcr.io/${{ env.repository }}/server:latest
