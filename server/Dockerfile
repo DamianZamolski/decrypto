@@ -17,4 +17,4 @@ copy --from=build /app/dist /app/dist
 env PORT=80
 expose $PORT
 healthcheck cmd curl --fail http://localhost:$PORT/health || exit 1
-cmd [ "pnpm", "start" ]
+cmd [ "pnpm", "run", "start" ]
