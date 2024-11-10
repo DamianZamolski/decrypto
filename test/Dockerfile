@@ -1,4 +1,4 @@
-from mcr.microsoft.com/playwright:latest
+from mcr.microsoft.com/playwright:v1.48.2
 run npm install -g pnpm
 workdir /app
 copy . .
