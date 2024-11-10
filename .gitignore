@@ -1,6 +1,5 @@
-.cache
-blob-report
+.database
+.grafana
+.test
 dist
 node_modules
-playwright-report
-test-results

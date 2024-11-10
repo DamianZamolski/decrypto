@@ -9,6 +9,7 @@ import { WsAdapter } from '@nestjs/platform-ws';
 
 async function main() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  app.enableShutdownHooks();
   app.useLogger(app.get(Logger));
   app.useWebSocketAdapter(new WsAdapter(app));
   app.use(cookieParser());
