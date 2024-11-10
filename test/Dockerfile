@@ -1,10 +1,6 @@
-from node:lts
-
+from mcr.microsoft.com/playwright:latest
 run npm install -g pnpm
 workdir /app
 copy . .
-
 run pnpm install --frozen-lockfile
-run pnpm run install-playwright
-
-cmd [ "pnpm", "run", "test" ]
+cmd ["pnpm", "run", "test"]
