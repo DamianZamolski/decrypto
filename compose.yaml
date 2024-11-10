@@ -35,6 +35,14 @@ services:
     restart: unless-stopped
     volumes:
       - ./.database:/var/lib/postgresql/data
+    command:
+      - postgres
+      - -c
+      - log_statement=all
+      - -c
+      - log_duration=on
+      - -c
+      - logging_collector=off 
 
   loki:
     profiles:
@@ -68,8 +76,6 @@ services:
       web:
         condition: service_healthy
       server:
-        condition: service_healthy
-      datbase:
         condition: service_healthy
     volumes:
       - ./.test:/app/playwright-report

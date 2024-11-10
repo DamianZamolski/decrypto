@@ -1,9 +1,9 @@
-import { Injectable, OnModuleDestroy } from '@nestjs/common';
+import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { Pool } from 'pg';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class Database implements OnModuleDestroy {
+export class Database implements OnModuleInit, OnModuleDestroy {
   private readonly pool: Pool;
 
   constructor(private configService: ConfigService) {
@@ -14,6 +14,15 @@ export class Database implements OnModuleDestroy {
       user: this.configService.get('DATABASE_USER'),
       password: this.configService.get('DATABASE_PASSWORD'),
     });
+  }
+
+  async onModuleInit() {
+    await this.pool.query(
+      `create table if not exists rooms (
+        id serial primary key,
+        created_at timestamptz default now()
+      )`,
+    );
   }
 
   async query(text: string, params?: unknown[]) {

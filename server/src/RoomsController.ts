@@ -18,6 +18,12 @@ export class RoomsController {
   }
 }
 
-export const roomSchema = z.object({ id: z.number().readonly() }).readonly();
+export const roomSchema = z
+  .object({
+    id: z.number().readonly(),
+    created_at: z.date().readonly(),
+  })
+  .passthrough()
+  .readonly();
 export const roomsSchema = z.array(roomSchema).readonly();
 export type Rooms = z.infer<typeof roomsSchema>;
